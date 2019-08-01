@@ -49,11 +49,17 @@ target_compile_options(ejdb2_node PRIVATE
 if (APPLE)
   set_target_properties(ejdb2_node PROPERTIES
                         LINK_FLAGS_RELEASE "${LINK_FLAGS_RELEASE} -s"
-                        LINK_FLAGS "-rdynamic -undefined dynamic_lookup")
+                        LINK_FLAGS "${LINK_FLAGS} -rdynamic -undefined dynamic_lookup")
 else ()
+  if (WIN32)
+    #todo:
+    target_link_libraries(ejdb2_node "/home/adam/tmp/node/node.lib")
+  else()
+    set(LINK_FLAGS "${LINK_FLAGS} -rdynamic -Wl,--unresolved-symbols=ignore-all")
+  endif()
   set_target_properties(ejdb2_node PROPERTIES
                         LINK_FLAGS_RELEASE "${LINK_FLAGS_RELEASE} -s"
-                        LINK_FLAGS "-rdynamic -Wl,--unresolved-symbols=ignore-all")
+                        LINK_FLAGS "${LINK_FLAGS}")
 endif()
 
 configure_file(package.json ${NODE_PUB_DIR}/package.json @ONLY)
