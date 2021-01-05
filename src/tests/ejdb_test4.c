@@ -145,7 +145,6 @@ static void ejdb_test4_2(void) {
   JQL q;
   JBL_NODE n, n2;
   int i = 0;
-  int64_t id = 0;
   EJDB_LIST list = 0;
   IWPOOL *pool = iwpool_create_empty();
 
